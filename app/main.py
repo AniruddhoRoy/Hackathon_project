@@ -8,7 +8,6 @@ import secrets
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-import anthropic
 from fastapi import BackgroundTasks, Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import RedirectResponse, StreamingResponse
@@ -22,7 +21,7 @@ from app.config import ADMIN_PASSWORD, PDF_DIR
 from app.ingest.extract import BENGALI_CHAR
 from app.ingest.pipeline import run_job
 from app.rag import store
-from app.rag.generator import stream_answer
+from app.rag.generator import LLMError, stream_answer
 from app.rag.retriever import retrieve
 
 APP_DIR = Path(__file__).parent
@@ -89,15 +88,14 @@ async def ask(body: AskRequest):
         try:
             async for text in stream_answer(question, chunks, cited):
                 yield sse("token", text)
-        except anthropic.APIError as e:
-            yield sse("error", f"LLM error: {getattr(e, 'message', str(e))}")
+        except LLMError as e:
+            yield sse("error", f"LLM error: {e}")
             return
 
-        used = [chunks[i] for i in cited] if cited else []
         yield sse("sources", [
-            {"source": c.source, "class_num": c.class_num, "subject": c.subject,
-             "page_num": c.page_num, "text": c.text}
-            for c in used
+            {"n": i + 1, "source": chunks[i].source, "class_num": chunks[i].class_num,
+             "subject": chunks[i].subject, "page_num": chunks[i].page_num, "text": chunks[i].text}
+            for i in sorted(cited)
         ])
         yield sse("done", {})
 

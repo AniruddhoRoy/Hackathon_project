@@ -20,10 +20,10 @@ function renderSources(el, sources) {
   if (!sources.length) return;
   const box = document.createElement("div");
   box.className = "sources";
-  sources.forEach((s, i) => {
+  sources.forEach((s) => {
     const d = document.createElement("details");
     const summary = document.createElement("summary");
-    summary.textContent = `[${i + 1}] ${s.subject} · Class ${s.class_num} · Page ${s.page_num} — ${s.source}`;
+    summary.textContent = `[${s.n}] ${s.subject} · Class ${s.class_num} · Page ${s.page_num} — ${s.source}`;
     const quote = document.createElement("blockquote");
     quote.textContent = s.text;
     d.append(summary, quote);

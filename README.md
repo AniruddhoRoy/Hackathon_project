@@ -1,19 +1,19 @@
 # NCTB Book Q&A
 
 Ask questions about NCTB textbooks in Bangla or English. Answers come only from the books, with book and page citations.
-One FastAPI app (pages + API + admin), ChromaDB for retrieval, Claude for answers. See [PROJECT_GUIDELINE.md](PROJECT_GUIDELINE.md) for the full plan.
+One FastAPI app (pages + API + admin), ChromaDB for retrieval, Gemma 4 for answers (Ollama Cloud by default, or the Gemini API). See [PROJECT_GUIDELINE.md](PROJECT_GUIDELINE.md) for the full plan.
 
 ## Setup
 
 ```bash
 python -m venv .venv
-# Windows
-.venv\Scripts\activate
+# Windows (PowerShell)
+.venv\Scripts\Activate.ps1
 # macOS/Linux
 source .venv/bin/activate
 
 pip install -r requirements.txt
-cp .env.example .env        # then set ANTHROPIC_API_KEY and ADMIN_PASSWORD
+cp .env.example .env        # then set OLLAMA_API_KEY and ADMIN_PASSWORD
 ```
 
 ## Load the starter books (16 ICT/Science books, Classes 6–9)
@@ -56,7 +56,7 @@ app/
   main.py          routes: chat page, /api/ask (streaming), /admin
   config.py        settings from .env
   db.py            SQLite: books + ingestion jobs
-  rag/             embeddings, Chroma store, retriever, Claude generator
+  rag/             embeddings, Chroma store, retriever, Gemma generator
   ingest/          PDF extract, OCR (stub), chunking, pipeline, HF dataset loader
   templates/       Jinja2 pages
   static/          CSS + small chat script

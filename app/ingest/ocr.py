@@ -2,7 +2,7 @@
 
 Not chosen yet; pick one (PROJECT_GUIDELINE.md §5.2) and implement `ocr_page`:
   - Google Cloud Vision / Document AI: best Bangla accuracy, paid
-  - Claude vision: send the page image, ask for a Unicode transcription
+  - Gemini / Gemma vision: send the page image, ask for a Unicode transcription (same GOOGLE_API_KEY)
   - Surya OCR / EasyOCR / Tesseract (ben): free, run on a GPU (Colab) for whole books
 
 Render the page to an image with:

@@ -11,8 +11,14 @@ PDF_DIR = DATA_DIR / "pdfs"
 VECTOR_DIR = DATA_DIR / "vectordb"
 DB_PATH = DATA_DIR / "app.db"
 
-LLM_MODEL = os.getenv("LLM_MODEL", "claude-opus-5-5")
-LLM_EFFORT = os.getenv("LLM_EFFORT", "medium")
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")  # ollama | google
+
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "https://ollama.com")
+OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma4:31b")
+
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
+GOOGLE_MODEL = os.getenv("GOOGLE_MODEL", "gemma-4-26b-a4b-it")
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-base")
 COLLECTION_NAME = "nctb_chunks"
