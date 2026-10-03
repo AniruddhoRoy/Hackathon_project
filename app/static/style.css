@@ -1,0 +1,92 @@
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --text: #1c1917;
+  --muted: #78716c;
+  --border: #e7e5e4;
+  --accent: #047857;
+  --accent-soft: #ecfdf5;
+  --danger: #b91c1c;
+  --radius: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0a09;
+    --surface: #1c1917;
+    --text: #f5f5f4;
+    --muted: #a8a29e;
+    --border: #292524;
+    --accent: #34d399;
+    --accent-soft: #052e22;
+    --danger: #f87171;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.7 "Hind Siliguri", system-ui, sans-serif;
+}
+a { color: var(--accent); }
+code { font-size: .9em; background: var(--border); padding: .1em .35em; border-radius: 4px; }
+.muted { color: var(--muted); }
+
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 760px; margin: 0 auto; padding: 16px;
+}
+.brand { font-weight: 600; font-size: 1.1rem; text-decoration: none; color: var(--text); }
+.container { max-width: 760px; margin: 0 auto; padding: 0 16px 120px; }
+
+input, select, textarea, button { font: inherit; color: inherit; }
+input, select, textarea {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; min-width: 0;
+}
+button {
+  background: var(--accent); color: var(--bg); border: 0;
+  border-radius: 8px; padding: 8px 18px; font-weight: 600; cursor: pointer;
+}
+button:disabled { opacity: .5; cursor: wait; }
+button.link { background: none; color: var(--accent); padding: 0; font-weight: 400; }
+button.danger { color: var(--danger); }
+
+/* Chat */
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.filters select { flex: 1 1 160px; }
+
+.messages { display: flex; flex-direction: column; gap: 16px; }
+.empty { text-align: center; padding: 64px 0; }
+.empty p { margin: 4px 0; }
+
+.msg { padding: 12px 16px; border-radius: var(--radius); white-space: pre-wrap; word-wrap: break-word; }
+.msg.user { align-self: flex-end; background: var(--accent-soft); max-width: 85%; }
+.msg.bot { background: var(--surface); border: 1px solid var(--border); }
+.msg.error { color: var(--danger); }
+.msg.pending::after { content: "▍"; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.sources { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 8px; white-space: normal; }
+.sources details { font-size: .9rem; margin: 4px 0; }
+.sources summary { cursor: pointer; color: var(--muted); }
+.sources blockquote { margin: 6px 0 6px 12px; color: var(--muted); white-space: pre-wrap; }
+
+.ask {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: flex; gap: 8px; max-width: 760px; margin: 0 auto;
+  padding: 16px; background: linear-gradient(transparent, var(--bg) 30%);
+}
+.ask textarea { flex: 1; resize: none; max-height: 160px; }
+
+/* Admin */
+h2 { font-size: 1.1rem; margin-top: 32px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.row > * { flex: 1 1 120px; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; display: block; overflow-x: auto; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.status-done { color: var(--accent); }
+.status-failed { color: var(--danger); }

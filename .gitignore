@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Data (large / regenerable)
+data/pdfs/*
+data/vectordb/*
+data/*.db
+!data/pdfs/.gitkeep
+!data/vectordb/.gitkeep
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

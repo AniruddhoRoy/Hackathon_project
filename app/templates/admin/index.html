@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Admin · NCTB প্রশ্নোত্তর{% endblock %}
+{% block nav %}<span class="muted">Admin</span>{% endblock %}
+
+{% block content %}
+<h2>Upload a book</h2>
+<form class="card stack" action="/admin/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" accept="application/pdf" required>
+  <div class="row">
+    <input name="subject" placeholder="Subject (e.g. Science)" required>
+    <input name="class_num" type="number" min="1" max="12" placeholder="Class" required>
+    <select name="language" required>
+      <option value="bn">বাংলা</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+  <button type="submit">Upload &amp; index</button>
+</form>
+
+<h2>Recent jobs</h2>
+{% if jobs %}
+<table>
+  <tr><th>File</th><th>Status</th><th>Message</th></tr>
+  {% for j in jobs %}
+  <tr><td>{{ j.source }}</td><td class="status-{{ j.status }}">{{ j.status }}</td><td>{{ j.message or "" }}</td></tr>
+  {% endfor %}
+</table>
+<p class="muted"><a href="/admin">Refresh</a> to update status.</p>
+{% else %}<p class="muted">No uploads yet.</p>{% endif %}
+
+<h2>Indexed books</h2>
+{% if books %}
+<table>
+  <tr><th>Book</th><th>Class</th><th>Subject</th><th>Lang</th><th>Chunks</th><th>Origin</th><th></th></tr>
+  {% for b in books %}
+  <tr>
+    <td>{{ b.source }}</td><td>{{ b.class_num }}</td><td>{{ b.subject }}</td>
+    <td>{{ b.language }}</td><td>{{ b.chunks }}</td><td>{{ b.origin }}</td>
+    <td>
+      <form action="/admin/books/{{ b.source | urlencode }}/delete" method="post"
+            onsubmit="return confirm('Remove {{ b.source }} from the index?')">
+        <button class="link danger">Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="muted">Nothing indexed yet. Run <code>python -m app.ingest.load_hf</code> to load the starter dataset.</p>
+{% endif %}
+{% endblock %}

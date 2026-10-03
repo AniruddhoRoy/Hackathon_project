@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form id="filters" class="filters">
+  <select name="class_num" aria-label="Class">
+    <option value="">সব শ্রেণি / All classes</option>
+    {% for c in options.classes %}<option value="{{ c }}">Class {{ c }}</option>{% endfor %}
+  </select>
+  <select name="subject" aria-label="Subject">
+    <option value="">সব বিষয় / All subjects</option>
+    {% for s in options.subjects %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+  </select>
+  <select name="language" aria-label="Version">
+    <option value="">উভয় ভার্সন / Both versions</option>
+    <option value="bn">বাংলা ভার্সন</option>
+    <option value="en">English version</option>
+  </select>
+</form>
+
+<section id="messages" class="messages">
+  <div class="empty">
+    <p>তোমার পাঠ্যবই থেকে যেকোনো প্রশ্ন করো।</p>
+    <p class="muted">Ask anything from your NCTB textbook. Answers come only from the book.</p>
+  </div>
+</section>
+
+<form id="ask" class="ask">
+  <textarea name="question" rows="1" placeholder="প্রশ্ন লেখো… / Type your question…" required></textarea>
+  <button type="submit">Ask</button>
+</form>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', path='chat.js') }}"></script>{% endblock %}
